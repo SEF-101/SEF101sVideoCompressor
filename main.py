@@ -94,7 +94,7 @@ class App(ctk.CTk):
         self.settingsWindow = None
 
         self.titleLabel = ctk.CTkLabel(self, text="Video Compressor", font=("Arial Bold", 20))
-        self.titleLabel.place(x = 120, y = 0)
+        self.titleLabel.place(x = 110, y = 0)
 
         self.filePathEntry = ctk.CTkEntry(self, placeholder_text="Enter File Path or click 'Choose File'", width=250)
         self.filePathEntry.place(x = 5, y = 30)
@@ -103,13 +103,13 @@ class App(ctk.CTk):
         self.chooseFileButton.place(x=257, y=30)
 
         self.targetCompressionLabel = ctk.CTkLabel(self, text="Enter Target Compression Size", font=("Arial Bold", 18))
-        self.targetCompressionLabel.place(x = 70, y = 60)
+        self.targetCompressionLabel.place(x = 65, y = 60)
 
         self.targetCompressionSizeEntry = ctk.CTkEntry(self, placeholder_text="Target Size (MB)")
-        self.targetCompressionSizeEntry.place(x = 30, y = 90)
+        self.targetCompressionSizeEntry.place(x = 45, y = 90)
 
         self.compressButton = ctk.CTkButton(self, text="Compress", command=self.compressVideo)
-        self.compressButton.place(x=252, y=90)
+        self.compressButton.place(x=210, y=90)
 
         self.compressProgressBar = ctk.CTkProgressBar(self, width=250)
         self.compressProgressBar.set(0.0)
@@ -118,7 +118,7 @@ class App(ctk.CTk):
         self.percentageLabel = ctk.CTkLabel(self, text="0%")
         self.percentageLabel.place(x=335, y=130)
 
-        self.settingsButton = ctk.CTkButton(self, text="Settings", command=self.openSettings)
+        self.settingsButton = ctk.CTkButton(self, text="Settings", command=self.openSettings, width=30)
         self.settingsButton.place(x=5, y=170)
 
 
