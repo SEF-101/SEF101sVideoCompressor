@@ -39,7 +39,7 @@ class App(ctk.CTk):
             ffmpeg.output(i, output_file_name,
                         **{'c:v': 'libx264', 'b:v': video_bitrate, 'pass': 2, 'c:a': 'aac', 'b:a': audio_bitrate}
                         ).overwrite_output().run(quiet=True)
-            # Remove the log files after encoding is complete
+            # delete log files after encoding is complete
             if os.path.exists(log_file):
                 os.remove(log_file)
             if os.path.exists(f"{log_file}.mbtree"):
@@ -70,31 +70,30 @@ class App(ctk.CTk):
         self.maxsize(400,300)
         self.title("Video Compressor")
 
-        self.titleLabel = ctk.CTkLabel(self, text="Video Compressor",font=("Futura",20))
-        self.titleLabel.place(x = 120, y = 0)
+        self.titleLabel = ctk.CTkLabel(self, text="Video Compressor", font=("Futura", 20))
+        self.titleLabel.pack(pady=10)
 
-        self.filePathEntry = ctk.CTkEntry(self, placeholder_text="Enter File Path or click 'Choose File'", width=250)
-        self.filePathEntry.place(x = 5, y = 30)
+        self.filePathEntry = ctk.CTkEntry(self, placeholder_text="Enter File Path or click 'Choose File'", width=50)
+        self.filePathEntry.pack(pady=10)
 
         self.chooseFileButton = ctk.CTkButton(self, text="Choose File", command=self.getOriginalVideosPath)
-        self.chooseFileButton.place(x=257, y=30)
+        self.chooseFileButton.pack(pady=10)
 
-
-        self.targetCompressionLabel = ctk.CTkLabel(self, text="Enter Target Compression Size", font=("Futura",16))
-        self.targetCompressionLabel.place(x = 110, y = 60)
+        self.targetCompressionLabel = ctk.CTkLabel(self, text="Enter Target Compression Size", font=("Futura", 18))
+        self.targetCompressionLabel.pack(pady=10)
 
         self.targetCompressionSizeEntry = ctk.CTkEntry(self, placeholder_text="Target Size (MB)")
-        self.targetCompressionSizeEntry.place(x = 30, y = 90)
+        self.targetCompressionSizeEntry.pack(pady=10)
 
         self.compressButton = ctk.CTkButton(self, text="Compress", command=self.compressVideo)
-        self.compressButton.place(x=252, y=90)
+        self.compressButton.pack(pady=10)
 
         self.compressProgressBar = ctk.CTkProgressBar(self, width=250)
         self.compressProgressBar.set(0.0)
-        self.compressProgressBar.place(x=75, y=210)
+        self.compressProgressBar.pack(pady=10)
 
         self.percentageLabel = ctk.CTkLabel(self, text="0%")
-        self.percentageLabel.place(x=335, y=200)
+        self.percentageLabel.pack(pady=10)
 
     def compressVideo(self):
         video_full_path = self.filePathEntry.get()
