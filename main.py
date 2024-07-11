@@ -4,7 +4,14 @@ import threading
 import time
 from tkinter import filedialog
 import ffmpeg
-import subprocess
+
+class SettingsWindow(ctk.CTkToplevel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.geometry("400x150")
+
+        self.label = ctk.CTkLabel(self, text="Change where compressed videos are saved", font=("Futura", 16))   
+        self.label.pack(padx=20, pady=20)
 
 class App(ctk.CTk):
     def compress_video(self, video_full_path, output_file_name, target_size):
@@ -65,12 +72,13 @@ class App(ctk.CTk):
 
     def __init__(self):
         super().__init__()
-        self.geometry("400x300")
-        self.minsize(400,300)
-        self.maxsize(400,300)
+        self.geometry("400x200")
+        self.minsize(400,200)
+        self.maxsize(400,200)
         self.title("Video Compressor")
+        self.settingsWindow = None
 
-        self.titleLabel = ctk.CTkLabel(self, text="Video Compressor", font=("Futura", 20))
+        self.titleLabel = ctk.CTkLabel(self, text="Video Compressor", font=("Arial Bold", 20))
         self.titleLabel.place(x = 120, y = 0)
 
         self.filePathEntry = ctk.CTkEntry(self, placeholder_text="Enter File Path or click 'Choose File'", width=250)
@@ -79,8 +87,8 @@ class App(ctk.CTk):
         self.chooseFileButton = ctk.CTkButton(self, text="Choose File", command=self.getOriginalVideosPath)
         self.chooseFileButton.place(x=257, y=30)
 
-        self.targetCompressionLabel = ctk.CTkLabel(self, text="Enter Target Compression Size", font=("Futura", 18))
-        self.targetCompressionLabel.place(x = 110, y = 60)
+        self.targetCompressionLabel = ctk.CTkLabel(self, text="Enter Target Compression Size", font=("Arial Bold", 18))
+        self.targetCompressionLabel.place(x = 80, y = 60)
 
         self.targetCompressionSizeEntry = ctk.CTkEntry(self, placeholder_text="Target Size (MB)")
         self.targetCompressionSizeEntry.place(x = 30, y = 90)
@@ -90,13 +98,20 @@ class App(ctk.CTk):
 
         self.compressProgressBar = ctk.CTkProgressBar(self, width=250)
         self.compressProgressBar.set(0.0)
-        self.compressProgressBar.place(x=75, y=210)
+        self.compressProgressBar.place(x=75, y=140)
 
         self.percentageLabel = ctk.CTkLabel(self, text="0%")
-        self.percentageLabel.place(x=335, y=200)
+        self.percentageLabel.place(x=335, y=130)
 
-        self.settingsButton = ctk.CTkButton(self, text="Settings")
-        self.settingsButton.place(x=5, y=250)
+        self.settingsButton = ctk.CTkButton(self, text="Settings", command=self.openSettings)
+        self.settingsButton.place(x=5, y=170)
+
+
+    def openSettings(self):
+        if self.settingsWindow is None or not self.settingsWindow.winfo_exists():
+            self.settingsWindow = SettingsWindow(self)  # create window if its None or destroyed
+        else:
+            self.settingsWindow.focus()  # if window exists focus it
 
     def compressVideo(self):
         video_full_path = self.filePathEntry.get()
