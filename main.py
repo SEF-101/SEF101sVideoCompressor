@@ -6,12 +6,27 @@ from tkinter import filedialog
 import ffmpeg
 
 class SettingsWindow(ctk.CTkToplevel):
+        
+    def getOriginalVideosPath(self):
+        filePath = filedialog.askopenfilename()
+        self.outputPathEntry.delete(0,ctk.END) # remove anything in text box
+        self.outputPathEntry.insert(0,filePath) # insert filepath in text box
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.geometry("400x150")
 
         self.label = ctk.CTkLabel(self, text="Change where compressed videos are saved", font=("Futura", 16))   
-        self.label.pack(padx=20, pady=20)
+        self.label.place(x=20, y=20)
+
+        self.outputPathEntry = ctk.CTkEntry(self, placeholder_text="Enter desired output directory or click 'Choose File'", width=250)
+        self.outputPathEntry.place(x = 5, y = 50)
+
+        self.chooseFileButton = ctk.CTkButton(self, text="Choose File", command=self.getOriginalVideosPath)
+        self.chooseFileButton.place(x=257, y=50)
+
+
+        
 
 class App(ctk.CTk):
     def compress_video(self, video_full_path, output_file_name, target_size):
@@ -57,7 +72,7 @@ class App(ctk.CTk):
                 elapsed_time = time.time() - start_time
                 progress = elapsed_time / duration
                 self.compressProgressBar.set(progress)
-                self.percentageLabel.config(text=f"{int(progress * 100)}%")
+                self.percentageLabel.configure(text=f"{int(progress * 100)}%")
                 time.sleep(0.5)
             self.compressProgressBar.set(1.0)
 
@@ -70,8 +85,8 @@ class App(ctk.CTk):
         self.filePathEntry.delete(0,ctk.END) # remove anything in text box
         self.filePathEntry.insert(0,filePath) # insert filepath in text box
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.geometry("400x200")
         self.minsize(400,200)
         self.maxsize(400,200)
@@ -88,7 +103,7 @@ class App(ctk.CTk):
         self.chooseFileButton.place(x=257, y=30)
 
         self.targetCompressionLabel = ctk.CTkLabel(self, text="Enter Target Compression Size", font=("Arial Bold", 18))
-        self.targetCompressionLabel.place(x = 80, y = 60)
+        self.targetCompressionLabel.place(x = 70, y = 60)
 
         self.targetCompressionSizeEntry = ctk.CTkEntry(self, placeholder_text="Target Size (MB)")
         self.targetCompressionSizeEntry.place(x = 30, y = 90)
@@ -115,11 +130,19 @@ class App(ctk.CTk):
 
     def compressVideo(self):
         video_full_path = self.filePathEntry.get()
+        output_directory = ""
+        
+        if output_directory == "":
+            # default output directory is downloads
+            output_directory = os.path.expanduser("~/Downloads")
+        
         output_file_name = os.path.splitext(os.path.basename(video_full_path))[0] + "_Compressed.mp4"
+        output_file_path = os.path.join(output_directory, output_file_name)
+        
         target_size = int(self.targetCompressionSizeEntry.get()) * 1000
         self.compressProgressBar.set(0)
         self.percentageLabel.configure(text="0%")
-        self.compress_video(video_full_path, output_file_name, target_size)
+        self.compress_video(video_full_path, output_file_path, target_size)
 
 
 app = App()
