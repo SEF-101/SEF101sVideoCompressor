@@ -29,17 +29,13 @@ class SettingsWindow(ctk.CTkToplevel):
         
 
 class App(ctk.CTk):
-    def compress_video(self, video_full_path, output_file_name, target_size):
-        # This method is taken from https://stackoverflow.com/questions/64430805/how-to-compress-video-to-target-size-by-python
-
-        # Reference: https://en.wikipedia.org/wiki/Bit_rate#Encoding_bit_rate
-
+    def compress_video(self, video_full_path, output_file_name, target_size, callback):
         min_audio_bitrate = 32000
         max_audio_bitrate = 256000
 
         probe = ffmpeg.probe(video_full_path)
         duration = float(probe['format']['duration'])
-        audio_bitrate = float(next((s for s in probe['streams'] if s['codec_type'] == 'audio'), None)['bit_rate'])
+        audio_bitrate = float(next((s for s in probe['streams'] if s['codec_type'] == 'audio'), {}).get('bit_rate', 128000))
         target_total_bitrate = (target_size * 1024 * 8) / (1.073741824 * duration)
 
         if 10 * audio_bitrate > target_total_bitrate:
@@ -50,34 +46,20 @@ class App(ctk.CTk):
                 audio_bitrate = max_audio_bitrate
         video_bitrate = target_total_bitrate - audio_bitrate
 
-        start_time = time.time()
+        log_file = "ffmpeg2pass-0.log"
 
-        def run_ffmpeg():
-            log_file = "ffmpeg2pass-0.log"
-            i = ffmpeg.input(video_full_path)
-            ffmpeg.output(i, os.devnull,
-                        **{'c:v': 'libx264', 'b:v': video_bitrate, 'pass': 1, 'f': 'mp4'}
-                        ).overwrite_output().run(quiet=True)
-            ffmpeg.output(i, output_file_name,
-                        **{'c:v': 'libx264', 'b:v': video_bitrate, 'pass': 2, 'c:a': 'aac', 'b:a': audio_bitrate}
-                        ).overwrite_output().run(quiet=True)
-            # delete log files after encoding is complete
-            if os.path.exists(log_file):
-                os.remove(log_file)
-            if os.path.exists(f"{log_file}.mbtree"):
-                os.remove(f"{log_file}.mbtree")
+        i = ffmpeg.input(video_full_path)
+        ffmpeg.output(i, os.devnull, **{'c:v': 'libx264', 'b:v': video_bitrate, 'pass': 1, 'f': 'mp4'}).overwrite_output().run(quiet=True)
+        ffmpeg.output(i, output_file_name, **{'c:v': 'libx264', 'b:v': video_bitrate, 'pass': 2, 'c:a': 'aac', 'b:a': audio_bitrate}).overwrite_output().run(quiet=True)
 
-        def update_progress():
-            while time.time() - start_time < duration:
-                elapsed_time = time.time() - start_time
-                progress = elapsed_time / duration
-                self.compressProgressBar.set(progress)
-                self.percentageLabel.configure(text=f"{int(progress * 100)}%")
-                time.sleep(0.5)
-            self.compressProgressBar.set(1.0)
+        # Clean up log files
+        for log_extension in ['log', 'log.mbtree']:
+            log_path = f"ffmpeg2pass-0.{log_extension}"
+            if os.path.exists(log_path):
+                os.remove(log_path)
 
-        threading.Thread(target=run_ffmpeg).start()
-        threading.Thread(target=update_progress).start()
+        # Update GUI safely
+        self.after(0, callback)
 
 
     def getOriginalVideosPath(self):
@@ -130,19 +112,21 @@ class App(ctk.CTk):
 
     def compressVideo(self):
         video_full_path = self.filePathEntry.get()
-        output_directory = ""
-        
-        if output_directory == "":
-            # default output directory is downloads
-            output_directory = os.path.expanduser("~/Downloads")
-        
+        output_directory = os.path.expanduser("~/Downloads")
         output_file_name = os.path.splitext(os.path.basename(video_full_path))[0] + "_Compressed.mp4"
         output_file_path = os.path.join(output_directory, output_file_name)
-        
         target_size = int(self.targetCompressionSizeEntry.get()) * 1000
+
+        # Update GUI that compression is starting
         self.compressProgressBar.set(0)
         self.percentageLabel.configure(text="0%")
-        self.compress_video(video_full_path, output_file_path, target_size)
+
+        # Start compression in a new thread
+        threading.Thread(target=self.compress_video, args=(video_full_path, output_file_path, target_size, self.finish_compression), daemon=True).start()
+
+    def finish_compression(self):
+        self.compressProgressBar.set(100)
+        self.percentageLabel.configure(text="Done!")
 
 
 app = App()

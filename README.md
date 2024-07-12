@@ -1,5 +1,6 @@
 # Video Compressor
-To use this program, you must have ffmpeg installed on your machine.
+
+To use this program, you must have ffmpeg installed on your machine and then install this program.
 
 ## Installing FFmpeg on windows:
 1. Download the latest version of FFmpeg from [here](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z).
