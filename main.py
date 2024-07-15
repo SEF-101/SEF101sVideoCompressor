@@ -5,25 +5,25 @@ import time
 from tkinter import filedialog
 import ffmpeg
 
-class SettingsWindow(ctk.CTkToplevel):
+# class SettingsWindow(ctk.CTkToplevel):
         
-    def getOriginalVideosPath(self):
-        filePath = filedialog.askopenfilename()
-        self.outputPathEntry.delete(0,ctk.END) # remove anything in text box
-        self.outputPathEntry.insert(0,filePath) # insert filepath in text box
+#     def getOriginalVideosPath(self):
+#         filePath = filedialog.askopenfilename()
+#         self.outputPathEntry.delete(0,ctk.END) # remove anything in text box
+#         self.outputPathEntry.insert(0,filePath) # insert filepath in text box
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.geometry("400x150")
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.geometry("400x150")
 
-        self.label = ctk.CTkLabel(self, text="Change where compressed videos are saved", font=("Futura", 16))   
-        self.label.place(x=20, y=20)
+#         self.label = ctk.CTkLabel(self, text="Change where compressed videos are saved", font=("Futura", 16))   
+#         self.label.place(x=20, y=20)
 
-        self.outputPathEntry = ctk.CTkEntry(self, placeholder_text="Enter desired output directory or click 'Choose File'", width=250)
-        self.outputPathEntry.place(x = 5, y = 50)
+#         self.outputPathEntry = ctk.CTkEntry(self, placeholder_text="Enter desired output directory or click 'Choose File'", width=250)
+#         self.outputPathEntry.place(x = 5, y = 50)
 
-        self.chooseFileButton = ctk.CTkButton(self, text="Choose File", command=self.getOriginalVideosPath)
-        self.chooseFileButton.place(x=257, y=50)
+#         self.chooseFileButton = ctk.CTkButton(self, text="Choose File", command=self.getOriginalVideosPath)
+#         self.chooseFileButton.place(x=257, y=50)
 
 
         
@@ -100,15 +100,15 @@ class App(ctk.CTk):
         self.percentageLabel = ctk.CTkLabel(self, text="0%")
         self.percentageLabel.place(x=335, y=130)
 
-        self.settingsButton = ctk.CTkButton(self, text="Settings", command=self.openSettings, width=30)
-        self.settingsButton.place(x=5, y=170)
+        # self.settingsButton = ctk.CTkButton(self, text="Settings", command=self.openSettings, width=30)
+        # self.settingsButton.place(x=5, y=170)
 
 
-    def openSettings(self):
-        if self.settingsWindow is None or not self.settingsWindow.winfo_exists():
-            self.settingsWindow = SettingsWindow(self)  # create window if its None or destroyed
-        else:
-            self.settingsWindow.focus()  # if window exists focus it
+    # def openSettings(self):
+    #     if self.settingsWindow is None or not self.settingsWindow.winfo_exists():
+    #         self.settingsWindow = SettingsWindow(self)  # create window if its None or destroyed
+    #     else:
+    #         self.settingsWindow.focus()  # if window exists focus it
 
     def compressVideo(self):
         video_full_path = self.filePathEntry.get()
