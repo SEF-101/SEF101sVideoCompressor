@@ -23,3 +23,8 @@ FFmpeg is now installed on your machine! You can proceed to download and run the
 
 ## Installing Video Compressor:
 
+
+
+
+## Using Video Compressor:
+
