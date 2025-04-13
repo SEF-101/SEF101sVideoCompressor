@@ -23,8 +23,47 @@ FFmpeg is now installed on your machine! You can proceed to download and run the
 
 ## Installing Video Compressor:
 
+You can use the app in two ways:
 
+### Option 1: Download the EXE (Recommended for Windows users)
 
+1. Go to the [Releases](https://github.com/yusef800/VideoCompressor/releases) section.
+2. Download the latest `.exe` file.
+3. Run the file — no setup required!
+
+> ⚠️ Windows may show a security warning. Click “More info” → “Run anyway” to trust the app.
+
+### Option 2: Run from GitHub Repo
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yusef800/VideoCompressor.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd VideoCompressor
+    ```
+3. Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4. Run the application:
+    ```bash
+    python main.py
+    ```
+
+You can now use the Video Compressor by following the usage instructions below.
 
 ## Using Video Compressor:
 
+1. **Open the app** by running `main.py`.
+
+2. **Click “Choose File”** and select the video you want to compress.
+
+3. **Enter the target size** in megabytes (e.g., `8` for 8MB).
+
+4. **Click “Compress”** — the app will process your video in the background.
+
+5. The compressed file will be saved to your **Downloads** folder with `_Compressed` added to the filename.
+
+You’ll get a popup when it’s done. That’s it!
