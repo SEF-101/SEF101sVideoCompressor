@@ -1,6 +1,9 @@
 # Video Compressor
 
-To use this program, you must have ffmpeg installed on your machine and then install this program.
+A simple desktop tool to compress video files to a target size (in MB).  
+Built with Python and CustomTkinter for a clean, lightweight experience.
+
+> ⚠️ Requires [FFmpeg](https://ffmpeg.org/download.html) to be installed and available in your system PATH.
 
 ## Installing FFmpeg on windows:
 1. Download the latest version of FFmpeg from [here](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z).
