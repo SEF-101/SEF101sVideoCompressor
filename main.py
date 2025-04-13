@@ -4,8 +4,17 @@ import os
 import threading
 from tkinter import filedialog
 import ffmpeg
+import sys
 
-ctk.set_default_color_theme("sef101-theme.json")
+def resource_path(relative_path):
+    """ Get absolute path to resource (works for dev and for PyInstaller) """
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.abspath(relative_path)
+
+
+ctk.set_default_color_theme(resource_path("sef101-theme.json"))
+
 
 class App(ctk.CTk):
     def compress_video(self, video_full_path, output_file_name, target_size, callback):
@@ -55,6 +64,8 @@ class App(ctk.CTk):
         self.minsize(400, 150)
         self.maxsize(400, 150)
         self.title("SEF101's Video Compressor")
+        #self.iconbitmap("SEF_icon.ico")
+ 
 
         self.titleLabel = ctk.CTkLabel(self, text="SEF101's Video Compressor", font=("Arial Bold", 20))
         self.titleLabel.place(x=65, y=0)
