@@ -56,14 +56,12 @@ You can now use the Video Compressor by following the usage instructions below.
 
 ## Using Video Compressor:
 
-1. **Open the app** by running `main.py`.
+1. **Click “Choose File”** and select the video you want to compress.
 
-2. **Click “Choose File”** and select the video you want to compress.
+2. **Enter the target size** in megabytes (e.g., `8` for 8MB).
 
-3. **Enter the target size** in megabytes (e.g., `8` for 8MB).
+3. **Click “Compress”** — the app will process your video in the background.
 
-4. **Click “Compress”** — the app will process your video in the background.
-
-5. The compressed file will be saved to your **Downloads** folder with `_Compressed` added to the filename.
+4. The compressed file will be saved to your **Downloads** folder with `_Compressed` added to the filename.
 
 You’ll get a popup when it’s done. That’s it!
