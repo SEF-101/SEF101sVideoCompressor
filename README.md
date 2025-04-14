@@ -30,7 +30,7 @@ You can use the app in two ways:
 
 ### Option 1: Download the EXE (Recommended for Windows users)
 
-1. Go to the [Releases](https://github.com/yusef800/VideoCompressor/releases) section.
+1. Go to the [Releases](https://github.com/SEF-101/VideoCompressor/releases) section.
 2. Download the latest `.exe` file.
 3. Run the file — no setup required!
 
