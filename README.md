@@ -68,3 +68,22 @@ You can now use the Video Compressor by following the usage instructions below.
 4. The compressed file will be saved to your **Downloads** folder with `_Compressed` added to the filename.
 
 You’ll get a popup when it’s done. That’s it!
+
+## Supported File Formats
+
+The Video Compressor supports a wide range of video formats for input, thanks to FFmpeg. Below are some of the commonly supported formats:
+
+### Input Formats:
+- MP4
+- AVI
+- MKV
+- MOV
+- WMV
+- FLV
+- WebM
+- And many more (any format supported by FFmpeg).
+
+### Output Format:
+- MP4 with:
+  - Video Codec: H.264 (`libx264`)
+  - Audio Codec: AAC
