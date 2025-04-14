@@ -1,4 +1,4 @@
-# Video Compressor
+# SEF101's Video Compressor
 
 A simple desktop tool to compress video files to a target size (in MB).  
 Built with Python and CustomTkinter for a clean, lightweight experience.
