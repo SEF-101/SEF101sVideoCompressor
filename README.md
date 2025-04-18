@@ -3,6 +3,8 @@
 A simple desktop tool to compress video files to a target size (in MB).  
 Built with Python and CustomTkinter for a clean, lightweight experience.
 
+![SEF101's Video Compressor GUI](./app_demo_pic.png)
+
 > ⚠️ Requires [FFmpeg](https://ffmpeg.org/download.html) to be installed and available in your system PATH.
 
 ## Installing FFmpeg on windows:
